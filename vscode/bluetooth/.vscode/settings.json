@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "bluetooth.h": "c",
+        "gatt.h": "c",
+        "bas.h": "c"
+    }
+}
