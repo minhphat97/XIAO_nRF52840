@@ -89,13 +89,13 @@ void loop() {
   readRegister(DATAZ1, 1, values_dataZ1);
   readRegister(chip_ID, 1, value_ID);
   //The ADXL345 gives 10-bit acceleration values, but they are stored as bytes (8-bits). To get the full value, two bytes must be combined for each axis.
-  //The X value is stored in values[0] and values[1].
-  int16_t rawX = ((int16_t)values_dataX0[0] << 8) | values_dataX0[0];
+  //The X value is stored in values_dataX1[0] and values_dataX0[0].
+  int16_t rawX = ((int16_t)values_dataX1[0] << 8) | values_dataX0[0];
   float accelX = rawX * 0.00390625; 
-  //The Y value is stored in values[2] and values[3].
+  //The Y value is stored in values_dataY1[0] and values_dataY0[0].
   int16_t rawY = ((int16_t)values_dataY1[0] << 8) | values_dataY0[0];
   float accelY = rawY * 0.00390625; 
-  //The Z value is stored in values[4] and values[5].
+  //The Z value is stored in values_dataZ1[0] and values_dataZ0[0].
   int16_t rawZ = ((int16_t)values_dataZ1[0] << 8) | values_dataZ0[0];
   float accelZ = rawZ * 0.00390625; 
   int16_t chipID = (int16_t)value_ID[0];
