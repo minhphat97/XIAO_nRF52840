@@ -45,7 +45,7 @@ BLEFloatCharacteristic zChar("2A58", BLERead | BLENotify);  // Z-axis characteri
 void setup() {
     // put your setup code here, to run once:
     Serial.begin(9600);
-    while (!Serial);
+    // while (!Serial); // wait for Serial Monitor to open
     //Call .begin() to configure the IMUs
     if (myIMU.begin() != 0) {
         Serial.println("Device error");
@@ -74,15 +74,17 @@ void setup() {
 
     // Start advertising
     BLE.advertise();
-    Serial.println("BLE device is now advertising...");
+    // Serial.println("BLE device is now advertising...");
 }
 
 void loop() {
+    
+
     // Wait for a BLE central device to connect
     BLEDevice central = BLE.central();
     if (central) {
-      Serial.print("Connected to central: ");
-      Serial.println(central.address());
+      //Serial.print("Connected to central: ");
+      //Serial.println(central.address());
 
       
       while (central.connected()) {
@@ -97,17 +99,18 @@ void loop() {
       zChar.writeValue(z_raw);
 
       // Debug output
-      Serial.println("Sending accelerometer data:");
-      Serial.print("X: ");
-      Serial.println(x_raw);
-      Serial.print("Y: ");
-      Serial.println(y_raw);
-      Serial.print("Z: ");
-      Serial.println(z_raw);
+      // Serial.println("Sending accelerometer data:");
+      // Serial.print("X: ");
+      // Serial.println(x_raw);
+      // Serial.print("Y: ");
+      // Serial.println(y_raw);
+      // Serial.print("Z: ");
+      // Serial.println(z_raw);
 
-      delay(200);  // Update every second
+      delay(20);  // Update every second
     }
-    Serial.println("Central disconnected");
+    
+    //Serial.println("Central disconnected");
   }
     /*
     //Accelerometer
