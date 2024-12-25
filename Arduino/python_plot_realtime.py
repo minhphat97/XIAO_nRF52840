@@ -61,26 +61,26 @@ async def read_xiao_data():
 
             await asyncio.sleep(0.5)  # Slight delay to prevent overwhelming the system
 
-def update_plot():
-    while not stop_flag:  # Check the stop flag to exit the loop
-        if not data_queue.empty():
-            current_time, value_X = data_queue.get()
-            # print(f"Updating plot with time: {current_time}, value_X: {value_X}")
-            times.append(current_time)
-            values_X.append(value_X)
+# def update_plot():
+#    while not stop_flag:  # Check the stop flag to exit the loop
+#        if not data_queue.empty():
+#            current_time, value_X = data_queue.get()
+#            # print(f"Updating plot with time: {current_time}, value_X: {value_X}")
+#            times.append(current_time)
+#            values_X.append(value_X)
 
-            # Keep the data to a certain length to avoid excessive memory usage
-            if len(times) > 100:
-                times.pop(0)
-                values_X.pop(0)
+#            # Keep the data to a certain length to avoid excessive memory usage
+#            if len(times) > 100:
+#                times.pop(0)
+#                values_X.pop(0)
 
-            # Update the plot data
-            line.set_data(times, values_X)
-            ax.relim()  # Recalculate limits
-            ax.autoscale_view()  # Automatically scale the view
-            plt.draw()  # Redraw the plot
+#            # Update the plot data
+#            line.set_data(times, values_X)
+#            ax.relim()  # Recalculate limits
+#            ax.autoscale_view()  # Automatically scale the view
+#            plt.draw()  # Redraw the plot
 
-        plt.pause(0.5)  # Pause to allow for plot updates
+#        plt.pause(0.5)  # Pause to allow for plot updates
 
 def run_event_loop():
     loop = asyncio.new_event_loop()
@@ -103,7 +103,24 @@ def start_plot_thread():
     fig.canvas.mpl_connect('key_press_event', on_key_press)
 
     while not stop_flag:  # Keep updating the plot until stop flag is set
-        update_plot()
+        if not data_queue.empty():
+            current_time, value_X = data_queue.get()
+            # print(f"Updating plot with time: {current_time}, value_X: {value_X}")
+            times.append(current_time)
+            values_X.append(value_X)
+
+            # Keep the data to a certain length to avoid excessive memory usage
+            if len(times) > 100:
+                times.pop(0)
+                values_X.pop(0)
+
+            # Update the plot data
+            line.set_data(times, values_X)
+            ax.relim()  # Recalculate limits
+            ax.autoscale_view()  # Automatically scale the view
+            plt.draw()  # Redraw the plot
+
+        plt.pause(0.5)  # Pause to allow for plot updates
 
 # Start both threads
 data_thread = threading.Thread(target=start_data_thread)
