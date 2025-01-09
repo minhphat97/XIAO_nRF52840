@@ -74,7 +74,7 @@ def start_data_thread():
     data_thread.start()
 
 def start_plot_thread():
-    global ax, line
+    global ax, line_X, line_Y, line_Z
     fig, ax = plt.subplots()
 
     # Initialize three lines for X, Y, and Z values
